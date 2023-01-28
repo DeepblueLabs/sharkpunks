@@ -8,7 +8,6 @@ typechain-types
 # vscode
 
 .vscode
-public
 
 # Hardhat files
 cache
