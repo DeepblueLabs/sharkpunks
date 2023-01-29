@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "description": "sharkpunks collection",
   "main": "index.js",
+  "author": "Deepblue Labs",
+  "license": "GPL-3.0-or-later",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Deepblue Labs",
-  "license": "ISC",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^2.0.1",
     "hardhat": "^2.12.6"
