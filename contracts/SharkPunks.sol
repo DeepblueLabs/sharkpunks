@@ -22,7 +22,7 @@ contract SharkPunks is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
     ) {}
 
     function _baseURI() internal pure override returns (string memory) {
-        return "ipfs://bafybeihxbcuspud5a4kyhxpuhfxkfbclvt6yyypd5h52puqbd3odhjudwi";
+        return "ipfs://bafybeihxbcuspud5a4kyhxpuhfxkfbclvt6yyypd5h52puqbd3odhjudwi/";
     }
 
     function safeMint(address to, string memory uri) public onlyOwner {
