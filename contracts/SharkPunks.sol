@@ -16,18 +16,24 @@ contract SharkPunks is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
     string public _symbol = unicode"ς";
     uint256 public _totalSupply = 1250;
 
-    constructor() ERC721(
-        _name,
-        _symbol
-    ) {}
+    string public baseTokenURI = "https://nftstorage.link/ipfs/bafybeiecwxziu3oczxgz75amhwwjm2nwcn5dormkcibbs27t5nncakedk4/";
 
-    function _baseURI() internal pure override returns (string memory) {
-        return "ipfs://bafybeihxbcuspud5a4kyhxpuhfxkfbclvt6yyypd5h52puqbd3odhjudwi/";
+    constructor() ERC721(_name, _symbol) {}
+
+    function _baseURI() internal view override returns (string memory) {
+        return baseTokenURI;
     }
 
-    function safeMint(address to, string memory uri) public onlyOwner {
+    function internalMint() public onlyOwner {
+        require(
+            _tokenIdCounter.current() < _totalSupply,
+            "SharkPunks: All tokens have been minted"
+        );
+        safeMint(msg.sender, _baseURI());
+    }
+
+    function safeMint(address to, string memory uri) private onlyOwner {
         uint256 tokenId = _tokenIdCounter.current();
-        require(tokenId < _totalSupply, "SharkPunks: Max supply reached");
         _tokenIdCounter.increment();
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
@@ -35,14 +41,19 @@ contract SharkPunks is ERC721, ERC721Enumerable, ERC721URIStorage, Ownable {
 
     // The following functions are overrides required by Solidity.
 
-    function _beforeTokenTransfer(address from, address to, uint256 tokenId, uint256 batchSize)
-        internal
-        override(ERC721, ERC721Enumerable)
-    {
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId,
+        uint256 batchSize
+    ) internal override(ERC721, ERC721Enumerable) {
         super._beforeTokenTransfer(from, to, tokenId, batchSize);
     }
 
-    function _burn(uint256 tokenId) internal override(ERC721, ERC721URIStorage) {
+    function _burn(uint256 tokenId)
+        internal
+        override(ERC721, ERC721URIStorage)
+    {
         super._burn(tokenId);
     }
 
